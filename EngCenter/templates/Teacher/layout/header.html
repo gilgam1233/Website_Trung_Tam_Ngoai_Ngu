@@ -1,0 +1,35 @@
+<header id="header" class="header dark-background d-flex flex-column">
+    <i class="header-toggle d-xl-none bi bi-list"></i>
+
+    <a href="/">
+        <div class="profile-img">
+                <img src="{{url_for('static', filename='img/logo_2.png')}}" alt="" class="img-fluid rounded-circle">
+            </div>
+    </a>
+
+    <nav id="navmenu" class="navmenu">
+        <ul>
+            <li><a href="/" class="{{ 'active' if request.endpoint == 'teacher_bp.home' else '' }}"><i class="bi bi-house navicon"></i>Trang chủ</a></li>
+            <li><a href="/"><i class="bi bi-person navicon"></i>Thông tin cá nhân</a></li>
+            <li class="dropdown">
+                <a href="#" class="{{'active' if 'class_' in request.endpoint else ''}}">
+                    <i class="bi bi-menu-button navicon">
+
+                    </i>
+                    <span>Danh sách chức năng</span>
+                <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                <ul class="{{'dropdown-active' if 'class_' in request.endpoint else ''}}">
+                    <li><a class="{{'active' if 'class_' in request.endpoint else ''}}"
+                           href="/LopGiangDay">Xem lớp giảng dạy</a></li>
+                    <li><a href="#">Xem thời khóa biểu</a></li>
+<!--                    <li><a class="{{ 'active' if request.endpoint == 'teacher_bp.class_NhapDiem' else '' }}"-->
+<!--                           href="/NhapDiem">Nhập điểm</a></li>-->
+<!--                    <li><a href="#">Điểm danh</a></li>-->
+                </ul>
+            </li>
+            <li><a href="#"><i class="bi bi-gear navicon"></i>Cài đặt</a></li>
+            <li><a href="#"><i class="bi bi-box-arrow-left navicon"></i>Đăng xuất</a></li>
+        </ul>
+    </nav>
+
+</header>

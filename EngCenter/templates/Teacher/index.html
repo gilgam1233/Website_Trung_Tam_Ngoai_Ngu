@@ -1,151 +1,120 @@
-<!DOCTYPE html>
-<html lang="en">
+{%extends 'Teacher/layout/base.html'%}
 
-<head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Index - iPortfolio Bootstrap Template</title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
+{%block content%}
 
-  <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <!--Card-->
+    <div class="p-4">
+        <div class="row g-4 mt-1">
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com" rel="preconnect">
-  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="card border-0 shadow-sm rounded-3 h-100">
+                    <div class="card-body p-3 d-flex align-items-center">
+                        <div class="icon-box bg-primary text-white rounded-3 d-flex align-items-center justify-content-center">
+                            <i class="bi bi-people-fill fs-3"></i>
+                        </div>
+                        <div class="ms-3">
+                            <p class="text-muted mb-0 small">Lớp hôm nay</p>
+                            <h5 class="fw-bold mb-0 nav_font">03</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-  <!-- Vendor CSS Files -->
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="card border-0 shadow-sm rounded-3 h-100">
+                    <div class="card-body p-3 d-flex align-items-center">
+                        <div class="icon-box bg-info text-white rounded-3 d-flex align-items-center justify-content-center">
+                            <i class="bi bi-clock-fill fs-3"></i>
+                        </div>
+                        <div class="ms-3">
+                            <p class="text-muted mb-0 small">Giờ dạy/tháng</p>
+                            <h5 class="fw-bold mb-0 nav_font">48h</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-  <!-- Main CSS File -->
-  <link href="assets/css/main.css" rel="stylesheet">
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="card border-0 shadow-sm rounded-3 h-100">
+                    <div class="card-body p-3 d-flex align-items-center">
+                        <div class="icon-box bg-success text-white rounded-3 d-flex align-items-center justify-content-center">
+                            <i class="bi bi-cash-stack fs-3"></i>
+                        </div>
+                        <div class="ms-3">
+                            <p class="text-muted mb-0 small">Lương tạm tính</p>
+                            <h5 class="fw-bold mb-0 nav_font">10.000.000 VNĐ</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-  <!-- =======================================================
-  * Template Name: iPortfolio
-  * Template URL: https://bootstrapmade.com/iportfolio-bootstrap-portfolio-websites-template/
-  * Updated: Jun 29 2024 with Bootstrap v5.3.3
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
-</head>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="card border-0 shadow-sm rounded-3 h-100">
+                    <div class="card-body p-3 d-flex align-items-center">
+                        <div class="icon-box bg-warning text-white rounded-3 d-flex align-items-center justify-content-center">
+                            <i class="bi bi-star-fill fs-3"></i></div>
+                        <div class="ms-3">
+                            <p class="text-muted mb-0 small">Đánh giá</p>
+                            <h5 class="fw-bold mb-0 nav_font">4.8/5</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-<body class="index-page">
+        </div>
 
-  <header id="header" class="header dark-background d-flex flex-column">
-    <i class="header-toggle d-xl-none bi bi-list"></i>
-
-    <div class="profile-img">
-      <img src="assets/img/my-profile-img.jpg" alt="" class="img-fluid rounded-circle">
     </div>
 
-    <a href="index.html" class="logo d-flex align-items-center justify-content-center">
-      <!-- Uncomment the line below if you also wish to use an image logo -->
-      <!-- <img src="assets/img/logo.png" alt=""> -->
-      <h1 class="sitename">Alex Smith</h1>
-    </a>
+    <!--Mini Schedule-->
 
-<!--    <div class="social-links text-center">-->
-<!--      <a href="#" class="twitter"><i class="bi bi-twitter-x"></i></a>-->
-<!--      <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>-->
-<!--      <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>-->
-<!--      <a href="#" class="google-plus"><i class="bi bi-skype"></i></a>-->
-<!--      <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>-->
-<!--    </div>-->
+    <div class="p-4">
+        <div class="row mt-1">
+            <div class="col-12 col-md-7 col-lg-9">
+                <table class="table table-hover table-bordered">
 
-    <nav id="navmenu" class="navmenu">
-      <ul>
-        <li><a href="#" class="active"><i class="bi bi-house navicon"></i>Trang chủ</a></li>
-        <li><a href="#"><i class="bi bi-person navicon"></i>Hồ sơ</a></li>
-<!--        <li><a href="#"><i class="bi bi-file-earmark-text navicon"></i> Resume</a></li>-->
-<!--        <li><a href="#"><i class="bi bi-images navicon"></i> Portfolio</a></li>-->
-<!--        <li><a href="#"><i class="bi bi-hdd-stack navicon"></i> Services</a></li>-->
-        <li class="dropdown"><a href="#"><i class="bi bi-menu-button navicon"></i> <span>Danh sách chức năng</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-          <ul>
-            <li><a href="#">Xem lớp giảng dạy</a></li>
-<!--            <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>-->
-<!--              <ul>-->
-<!--                <li><a href="#">Deep Dropdown 1</a></li>-->
-<!--                <li><a href="#">Deep Dropdown 2</a></li>-->
-<!--                <li><a href="#">Deep Dropdown 3</a></li>-->
-<!--                <li><a href="#">Deep Dropdown 4</a></li>-->
-<!--                <li><a href="#">Deep Dropdown 5</a></li>-->
-<!--              </ul>-->
-<!--            </li>-->
-            <li><a href="#">Xem thời khóa biểu</a></li>
-            <li><a href="#">Nhập điểm</a></li>
-            <li><a href="#">Điểm danh</a></li>
-          </ul>
-        </li>
-        <li><a href="#"><i class="bi bi-envelope navicon"></i>Cài đặt</a></li>
-          <li><a href="#"><i class="bi bi-envelope navicon"></i>Đăng xuất</a></li>
-      </ul>
-    </nav>
+                    <thead>
+                    <tr class="table-primary">
+                        <th colspan="3">Lịch dạy hôm nay</th>
+                    </tr>
+                    <tr>
+                        <th>Mã lớp</th>
+                        <th>Tên lớp</th>
+                        <th>Thời gian</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {%for c in classroom%}
+                    <tr>
+                        <td>{{c.id}}</td>
+                        <td>{{c.name}}</td>
+                        <td>13h-15h</td>
+                    </tr>
+                    {%endfor%}
 
-  </header>
+                    </tbody>
+                </table>
 
-  <main class="main">
+            </div>
 
-    <!-- Hero Section -->
-    <section id="hero" class="hero section dark-background">
+            <div class="col-12 col-md-5 col-lg-3">
+                <table class="table col-3 table-hover table-bordered">
+                    <thead>
+                    <tr class="table-primary">
+                        <th colspan="1" class="text-center">Thông báo</th>
 
-      <img src="assets/img/hero-bg.jpg" alt="" data-aos="fade-in" class="">
+                    </tr>
 
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-        <h2>Alex Smith</h2>
-        <p>I'm <span class="typed" data-typed-items="Designer, Developer, Freelancer, Photographer">Designer</span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span></p>
-      </div>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td rowspan="3">Hiện chưa có thông báo</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
-    </section><!-- /Hero Section -->
+    </div>
 
+{%endblock%}
 
-
-  </main>
-
-<!--  <footer id="footer" class="footer position-relative light-background">-->
-
-<!--    <div class="container">-->
-<!--      <div class="copyright text-center ">-->
-<!--        <p>© <span>Copyright</span> <strong class="px-1 sitename">iPortfolio</strong> <span>All Rights Reserved</span></p>-->
-<!--      </div>-->
-<!--      <div class="credits">-->
-<!--        &lt;!&ndash; All the links in the footer should remain intact. &ndash;&gt;-->
-<!--        &lt;!&ndash; You can delete the links only if you've purchased the pro version. &ndash;&gt;-->
-<!--        &lt;!&ndash; Licensing information: https://bootstrapmade.com/license/ &ndash;&gt;-->
-<!--        &lt;!&ndash; Purchase the pro version with working PHP/AJAX contact form: [buy-url] &ndash;&gt;-->
-<!--        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> Distributed by <a href="https://themewagon.com">ThemeWagon</a>-->
-<!--      </div>-->
-<!--    </div>-->
-
-<!--  </footer>-->
-
-  <!-- Scroll Top -->
-  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-  <!-- Preloader -->
-  <div id="preloader"></div>
-
-  <!-- Vendor JS Files -->
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
-  <script src="assets/vendor/aos/aos.js"></script>
-  <script src="assets/vendor/typed.js/typed.umd.js"></script>
-  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
-  <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
-  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
-  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-
-  <!-- Main JS File -->
-  <script src="assets/js/main.js"></script>
-
-</body>
-
-</html>

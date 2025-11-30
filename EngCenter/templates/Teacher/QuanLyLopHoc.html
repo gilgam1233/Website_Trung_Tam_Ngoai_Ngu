@@ -1,0 +1,108 @@
+{% extends "teacher/layout/base.html" %}
+
+{% block head_title %}
+<li class="current fs-4 fw-bold">Lớp học của tôi</li>
+{% endblock %}
+
+{% block content %}
+
+{%if classroom %}
+
+
+
+<div class="p-4">
+    <div class="row g-4">
+        {%for c in classroom%}
+        <div class="col-12 h-100 col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm class-card">
+                <div class="card-body p-4">
+                    <div class="mb-4">
+                        <h5 class="card-title fw-bold text-dark mb-1 text-truncate nav_font" title="{{c.name}}">
+                            {{c.course.name}}
+                        </h5>
+                        <p class="text-muted small mb-0 nav_font">
+                            Mã lớp: <span class="fw-bold text-primary">{{c.id}}</span>
+                        </p>
+                    </div>
+
+                    <div class="d-flex flex-column gap-3 mb-4">
+
+                        <div class="d-flex align-items-center">
+                            <div class="icon-box bg-primary bg-opacity-10 text-primary rounded-circle me-3 d-flex align-items-center justify-content-center"
+                                 style="width: 40px; height: 40px;">
+                                <i class="bi bi-calendar-week"></i>
+                            </div>
+                            <div>
+                                <small class="d-block text-muted" style="font-size: 0.75rem;">Lịch học</small>
+                                <span class="fw-medium text-dark">Thứ 2 - 4 - 6 (19:00)</span>
+                            </div>
+                        </div>
+
+                        <div class="d-flex align-items-center">
+                            <div class="icon-box bg-danger bg-opacity-10 text-danger rounded-circle me-3 d-flex align-items-center justify-content-center"
+                                 style="width: 40px; height: 40px;">
+                                <i class="bi bi-geo-alt-fill"></i>
+                            </div>
+                            <div>
+                                <small class="d-block text-muted" style="font-size: 0.75rem;">Phòng học</small>
+                                <span class="fw-medium text-dark">{{c.name}}</span>
+                            </div>
+                        </div>
+
+                        <div class="d-flex align-items-center">
+                            <div class="icon-box bg-warning bg-opacity-10 text-warning rounded-circle me-3 d-flex align-items-center justify-content-center"
+                                 style="width: 40px; height: 40px;">
+                                <i class="bi bi-people-fill"></i>
+                            </div>
+                            <div>
+                                <small class="d-block text-muted" style="font-size: 0.75rem;">Sĩ số</small>
+                                <span class="fw-medium text-dark">{{c.max_student}}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-grid mt-auto">
+                        <a href="/LopGiangDay/{{c.id}}/DanhSachHocVien" class="btn btn-primary fw-semibold py-2">
+                            Quản lý lớp học
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {%endfor%}
+    </div>
+</div>
+
+</div>
+{%else%}
+
+<div class="container-fluid p-4">
+
+    <div class="row justify-content-center align-items-center" style="min-height: 60vh;">
+
+        <div class="col-12 col-md-6 text-center">
+
+            <div class="mb-4 text-muted opacity-25">
+                <i class="bi bi-journal-x" style="font-size: 6rem;"></i>
+            </div>
+
+            <h3 class="fw-bold text-dark mb-2">Chưa có lớp học nào</h3>
+
+            <p class="text-muted mb-4">
+                Hiện tại bạn chưa được phân công giảng dạy lớp nào. <br>
+                Vui lòng liên hệ quản trị viên nếu đây là sự nhầm lẫn.
+            </p>
+
+            <a href="{{ url_for('teacher_bp.home') }}" class="btn btn-primary px-4 py-2 rounded-pill fw-medium">
+                <i class="bi bi-arrow-left me-2"></i>Quay về Dashboard
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{%endif%}
+
+{% endblock %}
