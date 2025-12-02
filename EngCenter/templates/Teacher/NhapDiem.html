@@ -5,7 +5,7 @@
 {%endblock%}
 
 {%block head_title%}
-<li class="current fs-4 fw-bold">Quản lý lớp học</li>
+<li class="current fs-4 fw-bold">Quản lý {{current_class.name}}</li>
 <li class="current fs-4 fw-bold">Nhập điểm</li>
 
 {%endblock%}
@@ -15,38 +15,20 @@
 
 {%include 'Teacher/layout/tab_nav.html'%}
 
+                     {%include 'Teacher/layout/main_search.html'%}
 
 
-<!--Thanh chức năng-->
 
-<div class="p-3">
-    <div class="row">
-        <div class="col-7">
-            <div class="form-floating">
-                <input type="text" class="form-control" id="NameSearch" placeholder="Nhập tên học viên" name="password">
-                <label for="NameSearch">Tên học viên</label>
-            </div>
-        </div>
-        <div class="col-5 d-flex justify-content-end gap-4">
-            <a href="/?=savefile"><i class="bi bi-floppy-fill fs-4"></i></a>
-            <a href="/?=luutam"><i class="bi bi-copy fs-4"></i></a>
-            <a href="/?=xuatFile"><i class="bi bi-printer-fill fs-4"></i></a>
-        </div>
-    </div>
-</div>
 
 <!--Danh sách-->
 <div class="p-4">
     <table class="table table-hover table-bordered">
 
-        <thead>
+        <thead class="text-center">
 
         <tr class="table-primary">
-            <th class="text-center" style="width: 40px;">
-                <input class="form-check-input" type="checkbox" id="checkAll">
-            </th>
-            <th>Mã học viên</th>
-            <th>Họ tên</th>
+                     {%include 'Teacher/layout/table_header.html'%}
+
              <th>Điểm chuyên cần</th>
             <th>Điểm giữa kỳ</th>
             <th>Điểm cuối kỳ</th>
@@ -55,23 +37,23 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-            {%for s in student%}
+        {%for s in student%}
+        <tr class="my_rows">
             <td class="text-center">
-                <input class="form-check-input" type="checkbox" name="class_ids" value="CL001">
+                <input class="form-check-input cb_class" type="checkbox" name="class_ids" value="CL001">
             </td>
             <td>{{s.id}}</td>
             <td>{{s.fullname}}</td>
-            <td contenteditable="true" class="editable-cell">
+            <td contenteditable="true" class="editable-cell score-cell">
 
             </td>
-            <td contenteditable="true" class="editable-cell">
+            <td contenteditable="true" class="editable-cell score-cell">
 
             </td>
-            <td contenteditable="true" class="editable-cell">
+            <td contenteditable="true" class="editable-cell score-cell">
 
             </td>
-             <td contenteditable="true" class="editable-cell">
+             <td contenteditable="true" class="editable-cell score-cell">
 
             </td>
             <td>

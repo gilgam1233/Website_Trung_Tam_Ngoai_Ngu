@@ -1,0 +1,84 @@
+{%extends 'Teacher/layout/base.html'%}
+
+{%block title%}
+<title>{{current_class.id}}</title>
+{%endblock%}
+
+{%block head_title%}
+<li class="current fs-4 fw-bold">Quản lý {{current_class.name}}</li>
+<li class="current fs-4 fw-bold">Điểm danh</li>
+
+{%endblock%}
+
+
+{%block content%}
+
+{%include 'Teacher/layout/tab_nav.html'%}
+
+
+{%include 'Teacher/layout/main_search.html'%}
+
+<div class="ms-4">
+    <label class="form-label fw-bold" for="date_pick">Chọn ngày:</label>
+    <input class="form-control w-auto d-inline-block" type="date" name="dd/mm/yyyy" id="date_pick">
+</div>
+
+<!--<div class="p-3">-->
+<!--    <ul class="nav nav-tabs my_nav">-->
+<!--        <li class="nav-items">-->
+<!--            Tổng cộng : 10-->
+<!--        </li>-->
+<!--        <li class="nav-items">-->
+<!--            Hiện diện : 10-->
+<!--        </li>-->
+<!--        <li class="nav-items">-->
+<!--            Vắng có phép : 10-->
+<!--        </li>-->
+<!--        <li class="nav-items">-->
+<!--            Vắng không phép : 10-->
+<!--        </li>-->
+<!--    </ul>-->
+<!--</div>-->
+
+<!--Danh sách-->
+<div class="p-4">
+    <table class="table table-hover table-bordered">
+        <thead class="text-center">
+        <tr class="table-primary">
+            {%include 'Teacher/layout/table_header.html'%}
+
+            <th>Có mặt</th>
+            <th>Có phép</th>
+            <th>Không phép</th>
+            <th>Trạng thái</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {%for s in student%}
+        <tr class="my_rows">
+            <td class="text-center">
+                <input class="form-check-input cb_class" type="checkbox" name="class_ids" value="CL001">
+            </td>
+            <td>{{s.id}}</td>
+            <td>{{s.fullname}}</td>
+            <td class="text-center">
+                <input class="form-check-input cb_attend" type="radio" name="status_{{s.id}}" value="PRESENT">
+            </td>
+            <td class="text-center">
+                <input class="form-check-input cb_attend" type="radio" name="status_{{s.id}}" value="ABSENT_EXCUSED">
+            </td>
+            <td class="text-center">
+                <input class="form-check-input cb_attend" type="radio" name="status_{{s.id}}" value="ABSENT_UNEXCUSED">
+            </td>
+            <td>
+                Chưa điểm danh
+            </td>
+
+        </tr>
+        {%endfor%}
+        </tbody>
+    </table>
+</div>
+
+{%endblock%}

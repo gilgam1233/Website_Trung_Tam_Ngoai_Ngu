@@ -81,6 +81,9 @@ class BillEnum(enum.Enum):
     UNPAID = 0
     PAID = 1
 
+class AttendanceStatusEnum(enum.Enum):
+    PRESENT = 0
+    ABSENT= 1
 
 class Course(db.Model):
     id = Column(String(10), primary_key=True)
@@ -130,6 +133,17 @@ class Enrollment(db.Model):
 
     student = db.relationship('User', foreign_keys=[student_id], backref='enrollments')
     classroom = db.relationship('Classroom', backref='enrollments')
+
+class Attendance(db.Model):
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    date = Column(Date, nullable=False, default=datetime.now) # Ngày điểm danh
+    status = Column(Enum(AttendanceStatusEnum), nullable=False, default=AttendanceStatusEnum.PRESENT)
+    note = Column(String(250))
+
+    enrollment_id = Column(Integer, ForeignKey(Enrollment.id), nullable=False)
+
+    enrollment = db.relationship('Enrollment', backref='attendances')
 
 class Score(db.Model):
     id = Column(Integer, primary_key=True, autoincrement=True)

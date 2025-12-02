@@ -12,6 +12,7 @@
   </li>
   <li class="{{'active active_nab' if request.endpoint == 'teacher_bp.class_NhapDiem'}}">
       <a href="{{url_for('teacher_bp.class_NhapDiem',class_id=current_class.id)}}">Nhập điểm</a></li>
-  <li><a href="#">Điểm danh</a></li>
+  <li class="{{'active active_nab' if request.endpoint == 'teacher_bp.class_DiemDanh'}}">
+      <a href = "{{url_for('teacher_bp.class_DiemDanh',class_id=current_class.id)}}">Điểm danh</a></li>
 </ul>
 </div>

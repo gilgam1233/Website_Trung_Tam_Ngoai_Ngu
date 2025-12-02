@@ -23,6 +23,13 @@ def class_NhapDiem(class_id):
     student = [e.student for e in enrollments]
     return render_template('NhapDiem.html', student = student,current_class = current_class)
 
+@teacher_bp.route('/LopGiangDay/<class_id>/DiemDanh')
+def class_DiemDanh(class_id):
+    current_class = teacher_service.getClassroomByID(class_id)
+    enrollments = teacher_service.getStudentByClassID(class_id)
+    student = [e.student for e in enrollments]
+    return render_template('DiemDanh.html', student = student,current_class = current_class)
+
 @teacher_bp.route('/LopGiangDay')
 def class_LopGiangDay():
     classroom = teacher_service.getClassByTeacherID('1010000001')
