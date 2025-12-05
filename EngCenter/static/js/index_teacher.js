@@ -9,6 +9,11 @@
 (function () {
     "use strict";
 
+    document.querySelector("li.dropdown").addEventListener("click",function (){
+        document.querySelector("li.dropdown div").classList.toggle("active");
+        document.querySelector("li.dropdown ul").classList.toggle("dropdown-active");
+
+    });
     /**
      * Header toggle
      */
@@ -230,30 +235,36 @@
     window.addEventListener('load', navmenuScrollspy);
     document.addEventListener('scroll', navmenuScrollspy);
 
-    let cb_select = document.getElementsByClassName("cb_class");
+})();
 
-    document.getElementById("checkAll").addEventListener("click", function () {
+document.addEventListener("DOMContentLoaded", function () {
 
-        var is_checked = this.checked;
-        for (var checkbox of cb_select)
-            checkbox.checked = is_checked;
-    });
+    // --- 1. XỬ LÝ CHECK ALL ---
+    let checkAll = document.getElementById("checkAll");
+    if (checkAll) {
+        checkAll.addEventListener("click", function () {
+            let cb_select = document.getElementsByClassName("cb_class");
+            var is_checked = this.checked;
+            for (var checkbox of cb_select)
+                checkbox.checked = is_checked;
+        });
+    }
 
-    let score_cell = document.getElementsByClassName("score-cell");
+    // --- 2. XỬ LÝ NHẬP ĐIỂM (VALIDATE & ĐỒNG BỘ) ---
+    let score_cells = document.querySelectorAll(".score-cell"); // Dùng querySelectorAll chuẩn hơn
 
-    for (let i = 0; i < score_cell.length; i++) {
-        score_cell[i].addEventListener("keydown", function (e) {
-            let allowed_Keys = ["Backspace", "Delete", "Tab",
-                "ArrowLeft", "ArrowRight", "."];
-            if (!/^[0-9]$/.test(e.key) && !allowed_Keys.includes(e.key))
+    score_cells.forEach(cell => {
+        cell.addEventListener("keydown", function (e) {
+            let allowed_Keys = ["Backspace", "Delete", "Tab", "ArrowLeft", "ArrowRight", "Enter", "."];
+            if (!/^[0-9]$/.test(e.key) && !allowed_Keys.includes(e.key)) e.preventDefault();
+            if (e.key == "." && this.innerText.includes(".")) e.preventDefault();
+            if (e.key === "Enter") {
                 e.preventDefault();
-
-            if (e.key == "." && this.innerText.includes("."))
-                e.preventDefault();
-
+                this.blur();
+            }
         });
 
-        score_cell[i].addEventListener("input", function (e) {
+        cell.addEventListener("input", function (e) {
             let text = this.innerText;
             let point = parseFloat(text);
 
@@ -262,93 +273,276 @@
                 point = parseFloat(this.innerText);
             }
 
-            if (point > 10)
+            if (point > 10) {
                 this.innerText = "10";
-            else if (point < 0)
+            } else if (point < 0) {
                 this.innerText = "0";
+            }
 
-            let current_cell = e.target;
-            dong_bo_hoa_diem(current_cell);
+            dong_bo_hoa_diem(this);
         });
+    });
 
+    // --- 3. XỬ LÝ TÌM KIẾM ---
+    let searchInput = document.getElementById("NameSearch");
+    if (searchInput) {
+        searchInput.addEventListener("input", function () {
+            let rows = document.querySelectorAll(".my_rows"); // Đảm bảo TR có class my_rows
+            let text = this.value.toLowerCase();
+            rows.forEach(row => {
+                if (row && row.cells[2]) {
+                    let cellText = row.cells[2].innerText.toLowerCase();
+                    if (!cellText.includes(text)) row.classList.add("d-none");
+                    else row.classList.remove("d-none");
+                }
+            });
+        });
     }
 
+    // --- 4. XỬ LÝ ĐIỂM DANH (RADIO BUTTON) ---
+    let attend_cb = document.querySelectorAll(".cb_attend");
+    attend_cb.forEach(item => {
+        item.addEventListener("change", function (e) {
+            dong_bo_hoa_diem_danh(e.target);
+        });
+    });
 
-    function dong_bo_hoa_diem(sourceCell) {
-        let sourceRow = sourceCell.closest('tr');
+});
 
-        let sourceCheckbox = sourceRow.querySelector('.cb_class');
 
-        if (!sourceCheckbox || !sourceCheckbox.checked) return;
+// --- CÁC HÀM HỖ TRỢ (Functions) ---
 
-        let columnIndex = sourceCell.cellIndex;
-        let newValue = sourceCell.innerText;
+// Hàm đồng bộ điểm (Batch Edit)
+function dong_bo_hoa_diem(sourceCell) {
+    let sourceRow = sourceCell.closest('tr');
+    let sourceCheckbox = sourceRow.querySelector('.cb_class');
 
-        let checkedBoxes = document.querySelectorAll('.cb_class:checked');
+    if (!sourceCheckbox || !sourceCheckbox.checked) return;
 
-        checkedBoxes.forEach(checkbox => {
-            let targetRow = checkbox.closest('tr');
+    let columnIndex = sourceCell.cellIndex;
+    let newValue = sourceCell.innerText;
 
-            if (targetRow !== sourceRow) {
+    let checkedBoxes = document.querySelectorAll('.cb_class:checked');
 
-                let targetCell = targetRow.cells[columnIndex];
+    checkedBoxes.forEach(checkbox => {
+        let targetRow = checkbox.closest('tr');
+        if (targetRow !== sourceRow) {
+            let targetCell = targetRow.cells[columnIndex];
+            if (targetCell && targetCell.classList.contains('score-cell')) {
                 targetCell.innerText = newValue;
                 targetCell.classList.add('bg-warning-sub');
                 setTimeout(() => targetCell.classList.remove('bg-warning-sub'), 300);
             }
-        });
-    }
-
-    document.getElementById("NameSearch").addEventListener("input", function () {
-        let rows = document.querySelectorAll(".my_rows");
-        let text = this.value.toLowerCase();
-        rows.forEach(row => {
-
-           if (row && row.cells[2])
-           {
-                let cellText = row.cells[2].innerText.toLowerCase();
-
-            if (!cellText.includes(text))
-                row.classList.add("d-none");
-            else
-                row.classList.remove("d-none");
-           }
-        });
+        }
     });
+}
 
-    let attend_cb = document.querySelectorAll(".cb_attend");
-    attend_cb.forEach(item => {
-        item.addEventListener("change",function (e){
-        dong_bo_hoa_diem_danh(e.target);
-        });
-    });
+// Hàm đồng bộ điểm danh
+function dong_bo_hoa_diem_danh(sourceInput) { // Nhận input, không phải cell
+    let sourceRow = sourceInput.closest('tr');
 
+    let last_source_row = sourceRow.lastElementChild; // Lấy ô cuối cùng
+    last_source_row.innerText = "Đã điểm danh";
 
-    function dong_bo_hoa_diem_danh(sourceCell) {
-        let sourceRow = sourceCell.closest('tr');
+    let sourceCheckbox = sourceRow.querySelector('.cb_class');
+    if (!sourceCheckbox || !sourceCheckbox.checked) return;
 
-        let sourceCheckbox = sourceRow.querySelector('.cb_class');
+    let sourceCell = sourceInput.closest('td');
+    let columnIndex = sourceCell.cellIndex;
+    let isChecked = sourceInput.checked; // Lấy trạng thái checked
 
-        if (!sourceCheckbox || !sourceCheckbox.checked) return;
+    let checkedBoxes = document.querySelectorAll('.cb_class:checked');
 
-        let sourceInput = sourceCell.closest('td');
-        let columnIndex = sourceInput.cellIndex;
-        let checked = sourceCell.checked;
+    checkedBoxes.forEach(checkbox => {
+        let targetRow = checkbox.closest('tr');
+        if (targetRow !== sourceRow) {
 
-        let checkedBoxes = document.querySelectorAll('.cb_class:checked');
+            let targetCell = targetRow.cells[columnIndex];
 
-        checkedBoxes.forEach(checkbox => {
-            let targetRow = checkbox.closest('tr');
+            let input = targetCell.querySelector("input");
+            if (input) {
+                input.checked = isChecked;
 
-            if (targetRow !== sourceRow) {
+                targetRow.lastElementChild.innerText = "Đã điểm danh";
 
-                let targetCell = targetRow.cells[columnIndex];
-                let input = targetCell.querySelector("input");
-                input.checked = checked;
                 targetCell.classList.add('bg-warning-sub');
                 setTimeout(() => targetCell.classList.remove('bg-warning-sub'), 300);
             }
+        }
+    });
+}
+
+
+// --- PHẦN GỬI DỮ LIỆU ---
+
+// 1. Đóng gói dữ liệu
+function package_data_to_json() {
+    let data_package = [];
+
+    let rows = document.querySelectorAll("tbody tr.diem");
+
+    rows.forEach(row => {
+        let cb = row.querySelector(".cb_class");
+
+        let enroll_id = cb.value;
+        let student_scores = [];
+
+        let score_cells = row.querySelectorAll(".data-score");
+
+        score_cells.forEach(score => {
+            let grade_id = score.getAttribute("data-grade-id");
+            let score_text = score.innerText;
+
+            if (score_text !== "") {
+                student_scores.push({
+                    grade_id: grade_id,
+                    score: parseFloat(score_text)
+                });
+            }
         });
+
+        let student_data = {
+            enrollment_id: enroll_id,
+            scores: student_scores
+        };
+
+        data_package.push(student_data);
+    });
+    return data_package;
+}
+
+// 2. Gửi đi (Hàm này được gọi từ onclick trong HTML)
+function save_grades_to_server(class_id) {
+    let raw_data = package_data_to_json();
+
+    fetch(`/LopGiangDay/${class_id}/NhapDiem/save`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(raw_data)
+    })
+        .then(response => response.json())
+        .then(result => {
+            if (result.success) {
+                showSuccessPopup("Lưu Thành công!", 'Bạn đã lưu thành công');
+                setTimeout(() => location.reload(), 2000);
+
+            } else {
+                showFailPopup('Lưu Thất Bại!', 'Bạn lưu không thành công');
+            }
+        })
+}
+
+function package_data_to_json_2() {
+    let data_package = [];
+    let rows = document.querySelectorAll("tbody tr.diem_danh");
+
+    for (let row of rows) {
+        let cb = row.querySelector(".cb_class");
+
+        let enroll_id = cb.value;
+
+        let radio_button = row.querySelector("input[type ='radio']:checked");
+
+        if (!radio_button) {
+            let student_name = row.cells[2] ? row.cells[2].innerText : "Học viên";
+            popWarning("Chú ý", `Vui lòng điểm danh cho ${student_name}`);
+            return [];
+        }
+
+        let status = radio_button.value;
+
+        let note = "";
+
+        if (status.includes("ABSENT_EXCUSED")) {
+            note = "Có phép";
+        } else if (status.includes("ABSENT_UNEXCUSED")) {
+            note = "Không phép";
+        }
+
+        status = status.replace(/_.*/,"");
+
+
+        let attend_data = {enrollment_id: enroll_id, status: status, note: note};
+
+        data_package.push(attend_data);
+
+
     }
 
-})();
+    return data_package;
+
+}
+
+function save_grades_to_server_2(class_id) {
+    let raw_data = package_data_to_json_2();
+
+    if (raw_data.length <= 0)
+        return;
+
+    let data_time = document.getElementById("date_pick").value;
+    if (data_time==="") {
+        let today = new Date();
+
+        let yyyy = today.getFullYear();
+
+        let mm = String(today.getMonth() + 1).padStart(2, '0');
+        let dd = String(today.getDate()).padStart(2, '0');
+
+        data_time = `${yyyy}-${mm}-${dd}`;
+    }
+
+    let final_data = {
+        "date": {
+            'date': data_time
+        },
+        "attend_data": raw_data
+    };
+
+    fetch(`/LopGiangDay/${class_id}/DiemDanh/save`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(final_data)
+    })
+        .then(response => response.json())
+        .then(result => {
+            if (result.success) {
+                showSuccessPopup("Lưu Thành công!", 'Bạn đã lưu thành công');
+                setTimeout(() => location.reload(), 2000);
+
+            } else {
+                showFailPopup('Lưu Thất Bại!', 'Bạn lưu không thành công');
+            }
+        })
+}
+
+function showSuccessPopup(title, text) {
+    Swal.fire({
+        title: title,
+        text: text,
+        icon: 'success',
+        showConfirmButton: false,
+        timer: 1500               // Tự tắt sau 1.5 giây
+    });
+}
+
+function showFailPopup(title, text) {
+    Swal.fire({
+        title: title,
+        text: text,
+        icon: 'error',
+        showConfirmButton: false,
+        timer: 1500               // Tự tắt sau 1.5 giây
+    });
+}
+
+function popWarning(title, text) {
+    Swal.fire({
+        icon: 'warning',
+        title: title,
+        text: text
+    });
+}

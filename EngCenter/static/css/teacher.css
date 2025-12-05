@@ -188,7 +188,9 @@ h6 {
 }
 
 .navmenu a,
-.navmenu a:focus {
+.navmenu a:focus,
+.navmenu div,
+.navmenu div:focus{
     color: #d1d2d8;
     padding: 15px 10px;
     font-family: var(--nav-font);
@@ -201,14 +203,24 @@ h6 {
     width: 100%;
 }
 
+.navmenu div:hover{
+    cursor: pointer;
+}
+
+.navmenu div{
+    user-select: none;
+}
+
 .navmenu a .navicon,
-.navmenu a:focus .navicon {
+.navmenu a:focus .navicon,
+.navmenu div .navicon,
+.navmenu div:focus .navicon{
     font-size: 20px;
     margin-right: 10px;
 }
 
-.navmenu a .toggle-dropdown,
-.navmenu a:focus .toggle-dropdown {
+.navmenu div .toggle-dropdown,
+.navmenu div:focus .toggle-dropdown {
     font-size: 12px;
     line-height: 0;
     margin-left: auto;
@@ -223,8 +235,8 @@ h6 {
     background-color: color-mix(in srgb, var(--accent-color), transparent 90%);
 }
 
-.navmenu a .toggle-dropdown:hover,
-.navmenu a:focus .toggle-dropdown:hover {
+.navmenu div .toggle-dropdown:hover,
+.navmenu div:focus .toggle-dropdown:hover {
     background-color: var(--accent-color);
     color: var(--contrast-color);
 }
@@ -258,6 +270,7 @@ h6 {
 }
 
 .navmenu .dropdown a:hover,
+.navmenu .dropdown div:hover    ,
 .navmenu .dropdown .active,
 .navmenu .dropdown .active:focus {
     color: var(--nav-dropdown-hover-color);

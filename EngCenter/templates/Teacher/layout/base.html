@@ -55,13 +55,13 @@
                 </nav>
                 <div class="dropdown hover-dropdown d-inline-block d-none d-xl-block">
 
-                    <a href="#" class="d-flex align-items-center text-decoration-none text-dark p-2"
-                       aria-expanded="false">
+                    <div class="d-flex align-items-center text-decoration-none text-dark p-2"
+                      style="cursor: pointer">
                         <div class="text-truncate me-2 mytext">
                             Xin chào, Giáo viên
                         </div>
                         <i class="bi bi-person-circle fs-3 text-primary"></i>
-                    </a>
+                    </div>
 
                     <ul class="dropdown-menu dropdown-menu-end shadow">
                         <li><a class="dropdown-item" href="#">Thông tin cá nhân</a></li>
@@ -83,7 +83,6 @@
     {%endblock%}
 </main>
 
-
 <!-- Scroll Top -->
 <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
         class="bi bi-arrow-up-short"></i></a>
@@ -102,6 +101,7 @@
 <script src="{{ url_for('static', filename='vendor/imagesloaded/imagesloaded.pkgd.min.js') }}"></script>
 <script src="{{ url_for('static', filename='vendor/isotope-layout/isotope.pkgd.min.js') }}"></script>
 <script src="{{ url_for('static', filename='vendor/swiper/swiper-bundle.min.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <!-- Main JS File -->
 <script src="{{url_for('static', filename='js/index_teacher.js')}}" rel="stylesheet"></script>

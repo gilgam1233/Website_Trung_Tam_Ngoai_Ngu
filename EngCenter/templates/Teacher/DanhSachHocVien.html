@@ -19,7 +19,15 @@
 
 {%include 'Teacher/layout/main_search.html'%}
 
+{% import "Teacher/layout/main_search.html" as toolbar %}
 
+
+
+{%call toolbar.render_toolbar()%}
+<!--<a class="btn my_btn shadow-sm" href="#"><i class="bi bi-floppy-fill fs-4"></i></a>-->
+<!--            <a class="btn my_btn shadow-sm" href="#"><i class="bi bi-copy fs-4"></i></a>-->
+<!--            <a class="btn my_btn shadow-sm" href="#"><i class="bi bi-printer-fill fs-4"></i></a>-->
+{%endcall%}
 <!--Danh sách-->
 <div class="p-4">
     <table class="table table-hover table-bordered">
@@ -34,19 +42,19 @@
 </thead>
 
         <tbody>
-        {%for s in student%}
+        {%for enroll in enrollments%}
         <tr class="my_rows">
             <td class="text-center">
                 <input class="form-check-input cb_class" type="checkbox" name="class_ids" value="CL001">
             </td>
-            <td>{{s.id}}</td>
-            <td>{{s.fullname}}</td>
+            <td>{{enroll.student.id}}</td>
+            <td>{{enroll.student.name}}</td>
             <td>
-               {{ s.dob.strftime('%d/%m/%Y') if s.dob else '' }}
+               {{ enroll.student.dob.strftime('%d/%m/%Y') if enroll.student.dob else '' }}
             </td>
-            <td>{{s.email}}</td>
+            <td>{{enroll.student.email}}</td>
             <td>
-                {%if s.gender == 0%}
+                {%if enroll.student.gender == 0%}
                 Nữ
                 {%else%}
                 Nam

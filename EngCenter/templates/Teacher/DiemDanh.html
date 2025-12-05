@@ -16,7 +16,21 @@
 {%include 'Teacher/layout/tab_nav.html'%}
 
 
-{%include 'Teacher/layout/main_search.html'%}
+{% import "Teacher/layout/main_search.html" as toolbar %}
+
+
+<form method="POST">
+{%call toolbar.render_toolbar()%}
+<button type="button" class="btn my_btn shadow-sm" >
+<i class="bi bi-floppy-fill fs-4" onclick="save_grades_to_server_2('{{current_class.id}}')"></i>
+</button>
+<button type="submit" class="btn my_btn shadow-sm">
+  <i class="bi bi-copy fs-4"></i></button>
+<button type="submit" class="btn my_btn shadow-sm">
+                <i class="bi bi-printer-fill fs-4"></i>
+</button>
+
+{%endcall%}
 
 <div class="ms-4">
     <label class="form-label fw-bold" for="date_pick">Chọn ngày:</label>
@@ -40,6 +54,7 @@
 <!--    </ul>-->
 <!--</div>-->
 
+
 <!--Danh sách-->
 <div class="p-4">
     <table class="table table-hover table-bordered">
@@ -55,21 +70,21 @@
         </thead>
 
         <tbody>
-        {%for s in student%}
-        <tr class="my_rows">
+        {%for enroll in enrollments%}
+        <tr class="my_rows diem_danh">
             <td class="text-center">
-                <input class="form-check-input cb_class" type="checkbox" name="class_ids" value="CL001">
+                <input class="form-check-input cb_class" type="checkbox" name="" value="{{enroll.id}}">
             </td>
-            <td>{{s.id}}</td>
-            <td>{{s.fullname}}</td>
+            <td>{{enroll.student.id}}</td>
+            <td>{{enroll.student.name}}</td>
             <td class="text-center">
-                <input class="form-check-input cb_attend" type="radio" name="status_{{s.id}}" value="PRESENT">
-            </td>
-            <td class="text-center">
-                <input class="form-check-input cb_attend" type="radio" name="status_{{s.id}}" value="ABSENT_EXCUSED">
+                <input class="form-check-input cb_attend" type="radio" name="status_{{enroll.student.id}}" value="PRESENT">
             </td>
             <td class="text-center">
-                <input class="form-check-input cb_attend" type="radio" name="status_{{s.id}}" value="ABSENT_UNEXCUSED">
+                <input class="form-check-input cb_attend" type="radio" name="status_{{enroll.student.id}}" value="ABSENT_EXCUSED">
+            </td>
+            <td class="text-center">
+                <input class="form-check-input cb_attend" type="radio" name="status_{{enroll.student.id}}" value="ABSENT_UNEXCUSED">
             </td>
             <td>
                 Chưa điểm danh
@@ -80,5 +95,6 @@
         </tbody>
     </table>
 </div>
+</form>
 
 {%endblock%}

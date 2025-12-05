@@ -15,54 +15,70 @@
 
 {%include 'Teacher/layout/tab_nav.html'%}
 
-                     {%include 'Teacher/layout/main_search.html'%}
+{% import "Teacher/layout/main_search.html" as toolbar %}
+
+<form method="POST">
+    {%call toolbar.render_toolbar()%}
+    <button id="save_diem" type="button" class="btn my_btn shadow-sm"
+            onclick="save_grades_to_server('{{current_class.id}}')">
+        <i class="bi bi-floppy-fill fs-4"></i>
+    </button>
+    <button type="submit" class="btn my_btn shadow-sm">
+        <i class="bi bi-copy fs-4"></i></button>
+    <button type="submit" class="btn my_btn shadow-sm">
+        <i class="bi bi-printer-fill fs-4"></i>
+    </button>
+
+    {%endcall%}
 
 
+    <!--Danh sách-->
+    <div class="p-4">
+        <table class="table table-hover table-bordered">
 
+            <thead class="text-center">
 
-<!--Danh sách-->
-<div class="p-4">
-    <table class="table table-hover table-bordered">
+            <tr class="table-primary">
+                {%include 'Teacher/layout/table_header.html'%}
+                {%for g in grade_component%}
+                <th>{{g.name}}</th>
+                {%endfor%}
+                <th>Điểm trung bình</th>
 
-        <thead class="text-center">
-
-        <tr class="table-primary">
-                     {%include 'Teacher/layout/table_header.html'%}
-
-             <th>Điểm chuyên cần</th>
-            <th>Điểm giữa kỳ</th>
-            <th>Điểm cuối kỳ</th>
-            <th>Điểm trung bình</th>
-            <th>Kết quả</th>
-        </tr>
-        </thead>
-        <tbody>
-        {%for s in student%}
-        <tr class="my_rows">
-            <td class="text-center">
-                <input class="form-check-input cb_class" type="checkbox" name="class_ids" value="CL001">
-            </td>
-            <td>{{s.id}}</td>
-            <td>{{s.fullname}}</td>
-            <td contenteditable="true" class="editable-cell score-cell">
-
-            </td>
-            <td contenteditable="true" class="editable-cell score-cell">
-
-            </td>
-            <td contenteditable="true" class="editable-cell score-cell">
-
-            </td>
-             <td contenteditable="true" class="editable-cell score-cell">
-
-            </td>
-            <td>
-                Không đạt
-            </td>
-        </tr>
-        {%endfor%}
-        </tbody>
-    </table>
-</div>
-
+                <th>Kết quả</th>
+            </tr>
+            </thead>
+            <tbody>
+            {%for enroll in enrollments%}
+            <tr class="my_rows diem">
+                <td class="text-center">
+                    <input class="form-check-input cb_class" type="checkbox" name="class_ids" value="{{enroll.id}}">
+                </td>
+                <td>
+                    {{enroll.student.id}}
+                </td>
+                <td>
+                    {{enroll.student.name}}
+                </td>
+                {%for g in grade_component%}
+                <td contenteditable="true" class="editable-cell score-cell data-score" data-grade-id="{{g.id}}">
+                    {{enroll.scores | get_score(g.name)}}
+                </td>
+                {%endfor%}
+                <td class="score-cell">
+                    {{enroll.scores | calculate_total}}
+                </td>
+                <td class="score-cell">
+                    {%if enroll.scores | calculate_total > 5%}
+                    Đạt
+                    {%else%}
+                    Không Đạt
+                    {%endif%}
+                </td>
+            </tr>
+            {%endfor%}
+            </tbody>
+        </table>
+    </div>
+</form>
 {%endblock%}
